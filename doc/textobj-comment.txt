@@ -1,0 +1,189 @@
+*textobj-comment.txt*	Text objects for comments
+
+Author: glts <676c7473@gmail.com>
+License: Same terms as Vim itself (see |license|)
+
+
+DESCRIPTION					*textobj-comment*
+
+This plugin provides text objects to select comments.
+
+The "ac" and "ic" text objects select a comment with and without whitespace
+respectively.  The "iC" text object selects only the comment content without
+the delimiters.
+
+|textobj-comment| uses the filetype-specific 'comments' setting to determine
+what a comment looks like for a given language.  It should thus automatically
+work for most languages supported by Vim.  The plugin handles any number of
+single and opening/closing delimiters.
+
+In order to find a target, |textobj-comment| looks for a comment under the
+cursor, in or at the end of the cursor line, and above the cursor line.
+
+You can see the text objects and the heuristic in action in the following
+section, |textobj-comment-usage|.
+
+Note This plugin depends on the |textobj-user| plugin, version 0.4.0 (Vim
+script ID 2100).
+
+
+USAGE						*textobj-comment-usage*
+
+The text objects "ac", "ic", and "iC" are defined in |Visual| and
+|Operator-pending| mode.  When the user enters any one of these text objects,
+|textobj-comment| searches for a comment by using this procedure:
+
+1.  Use any comment spanning the full line under the cursor.
+2.  Use any inline comment (if the language has them) or end-of-line comment
+    under or to the right of the cursor.
+3.  Use the nearest comment spanning the full line above the cursor.
+
+Note that step 3 is essentially an upwards search.  This is where a comment
+relevant to the current cursor position is most likely to be found.
+
+We'll now go on an illustrated tour of the text objects and the three steps of
+the heuristic.  See also |textobj-comment-interface| below for more details.
+
+
+1.  First, look for a full-line comment under the cursor.  "ac" selects
+    linewise including trailing blank lines (the vertical <Bar> indicates
+    selected lines). >
+
+	|    # We should probably inline
+	|    # this con[s]tant
+	|
+	     DOZEN = 12
+<
+    "ic" selects just the comment, without any surrounding whitespace. >
+
+	|    -- Cust[o]m "asInt'" function
+
+	     asInt' :: String -> Either ErrorMessage Int
+<
+    If there is no trailing whitespace, "ac" will select leading whitespace,
+    or no whitespace if there is none. >
+
+	|    /* This is an important part of
+	|     * the k[e]rnel. Do not touch! */
+	     int runlevel = 0;
+<
+    The "iC" text object, with capital "c", selects just what's inside the
+    comment (the overline indicates selected characters). >
+                _________________________
+	     %  See [t]he TeXbook, p. 352
+	     \def\thinspace{\kern .16667em }
+
+
+2.  Second, look for an inline or an end-of-line comment.  Inline and
+    end-of-line comments are selected characterwise.  Again, "ic" selects just
+    the comment without surrounding whitespace. >
+						     __________________
+	     *parse_syllab[l]e = \&parse_syllables;  # deprecated alias
+<
+    "ac", on the other hand, does include whitespace. >
+			    __________________________
+	     int tm[p] = 12;    /* core temperature */
+<
+    For inline comments, a match under the cursor is preferred, else one to
+    the right of the cursor is selected.  Again with "ac": >
+		  ____________
+	     int  /* tm[p] */ temperature = 12; // renamed variable
+
+
+3.  Third, if there hasn't been any success so far, search upwards for the
+    nearest full-line comment.  Using "ic": >
+
+	|    (* Let us make
+	|       a singleton. *)
+	     let s = SS.singleton "umb[r]ella";;
+<
+    Of course, the three steps apply to all three text objects.  "iC", too,
+    searches upwards to find a suitable target. >
+		  _________________
+	     <!-- This needs to be
+	 ____________________
+		  fixed ASAP! -->
+
+	     <xs:complexType n[a]me="TODO" />
+
+After this the comment search fails and nothing is selected.
+
+Note that in order to support two styles of commenting with opening/closing
+delimiters, |textobj-comment| tries to be clever and handles them differently.
+Consider these comments in C and XML source code: >
+
+	     /* These functions should be
+	      * moved to a separate file. */
+	     /* See also fileio.c and
+	      * sockets.c for examples. */
+
+	     <!-- These functions should be -->
+	     <!-- moved to a separate file. -->
+	     <!-- See also sources.xsl and  -->
+	     <!-- nodes.xsl for examples.   -->
+
+In the first example, two separate comments are recognized, but in the second
+example, which has only single-line comments with opening/closing delimiters,
+the whole commented block is treated as one big comment.
+
+Note that even for linewise selections a sensible start and end column is set,
+so that you can use "v" to switch to a useful characterwise selection. |v_v|
+
+
+INTERFACE					*textobj-comment-interface*
+
+By default, |textobj-comment| defines the key mappings "ac", "ic", and "iC"
+for the text objects it provides.  These map to named <Plug> mappings as
+usual.
+
+	default		named mapping ~
+	ac		<Plug>(textobj-comment-a)
+	ic		<Plug>(textobj-comment-i)
+	iC		<Plug>(textobj-comment-inside-i)
+
+
+<Plug>(textobj-comment-a)			*<Plug>(textobj-comment-a)*
+			Selects linewise a full-line comment, or characterwise
+			an inline or end-of-line comment.  Surrounding
+			whitespace is treated in a fashion similar to |ap|,
+			|aw|, etc., i.e. following whitespace is included if
+			there is any, else preceding whitespace is included if
+			there is any.
+
+<Plug>(textobj-comment-i)	 		*<Plug>(textobj-comment-i)*
+			Selects linewise a full-line comment or characterwise
+			an inline or end-of-line comment.  Surrounding
+			whitespace is not included.
+
+<Plug>(textobj-comment-inside-i)	    *<Plug>(textobj-comment-inside-i)*
+                        Select characterwise the content of a comment.
+			...
+
+For all text objects a simple heuristic applies which is described above in
+the section |textobj-comment-usage|.
+
+The mappings are defined in Visual and Operator-pending mode.  See the
+|textobj-user| documentation for more info.
+
+
+Like all plugins implementing |textobj-user|, |textobj-comment| defines the
+following two globals:
+
+				   *g:textobj_comment_no_default_key_mappings*
+g:textobj_comment_no_default_key_mappings
+Sets whether or not to define the default key mappings "ac", "ic", and "iC".
+Set this to "1" in your |vimrc| if you would like to disable the default key
+mappings.
+
+					   *:TextobjCommentDefaultKeyMappings*
+:TextobjCommentDefaultKeyMappings
+This command defines or restores the default key mappings "ac", "ic", and
+"iC".
+
+
+CHANGELOG					*textobj-comment-changelog*
+
+0.0.0	(unreleased) 2013-04-21
+
+
+ vim:tw=78:ts=8:ft=help:norl:

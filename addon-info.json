@@ -1,0 +1,13 @@
+{
+    "name": "textobj-comment",
+    "description": "Text objects for comments",
+    "author": "glts <676c7473@gmail.com>",
+    "version": "0.0.0",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/glts/vim-textobj-comment.git"
+    },
+    "dependencies": {
+        "textobj-user": {}
+    }
+}

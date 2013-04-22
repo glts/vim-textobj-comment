@@ -1,0 +1,52 @@
+textobj-comment
+---------------
+
+WORK IN PROGRESS Please report any issues on the issue tracker.
+
+
+This Vim plugin provides text objects to select comments.
+
+The "ac" and "ic" text objects select a comment with and without whitespace
+respectively. The "iC" text object selects only the comment content without
+the delimiters.
+
+Textobj-comment uses the filetype-specific 'comments' setting to determine
+what a comment looks like for a given language. It should thus automatically
+work for most languages supported by Vim. The plugin handles any number of
+single and opening/closing delimiters.
+
+In order to find a target, textobj-comment looks for a comment under the
+cursor, in or at the end of the cursor line, and above the cursor line.
+
+This plugin depends on the textobj-user plugin, version 0.4.0.
+
+Installation
+------------
+
+Move the files into their respective directories inside your ~/.vim directory
+(or your $HOME\vimfiles directory if you're on Windows).
+
+With the Pathogen plugin manager the installation is as simple as:
+
+cd ~/.vim/bundle
+git clone git://github.com/glts/vim-textobj-comment.git textobj-comment
+
+Finally, don't forget to run ":helptags" or equivalent on your doc directory
+to register the help file.
+
+Development
+-----------
+
+If you are interested in working on the code, use the test suite to make sure
+you don't break anything. The test suite is written using vspec.
+
+https://github.com/kana/vim-vspec
+
+To run the tests I use a small shell script:
+
+#!/bin/bash
+BUNDLEDIR=~/.vim/bundle
+VSPEC=${BUNDLEDIR}/vspec/bin/vspec
+for f in t/*.vim; do
+    ${VSPEC} ${BUNDLEDIR}/{vspec,textobj-user,textobj-comment} "${f}"
+done
