@@ -65,7 +65,7 @@ describe '<Plug>(textobj-comment-a)'
   it 'selects linewise'
     5
     call SelectAComment()
-    Expect visualmode() == 'V'
+    Expect visualmode() ==# 'V'
   end
 
   it 'sets proper start and end column'
@@ -101,7 +101,7 @@ describe '<Plug>(textobj-comment-i)'
   it 'selects linewise'
     5
     call SelectInnerComment()
-    Expect visualmode() == 'V'
+    Expect visualmode() ==# 'V'
   end
 
   it 'sets proper start and end column'
@@ -146,7 +146,7 @@ describe '<Plug>(textobj-comment-inside-i)'
   it 'selects characterwise'
     5
     call SelectInsideComment()
-    Expect visualmode() == 'v'
+    Expect visualmode() ==# 'v'
   end
 
   it 'doesn''t select inside empty comment'
