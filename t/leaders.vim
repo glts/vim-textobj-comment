@@ -4,7 +4,7 @@ runtime! autoload/textobj/comment.vim
 silent filetype plugin indent on
 syntax enable
 
-function SID()
+function! SID()
   redir => scripts
   silent scriptnames
   redir END
