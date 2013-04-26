@@ -20,6 +20,8 @@ cursor, in or at the end of the cursor line, and above the cursor line.
 
 This plugin depends on the textobj-user plugin, version 0.4.0.
 
+https://github.com/kana/vim-textobj-user
+
 Installation
 ------------
 
@@ -38,15 +40,11 @@ Development
 -----------
 
 If you are interested in working on the code, use the test suite to make sure
-you don't break anything. The test suite is written using vspec.
+you don't break anything. The test suite is written using vspec, version
+1.1.0.
 
 https://github.com/kana/vim-vspec
 
-To run the tests I use a small shell script:
-
-#!/bin/bash
-BUNDLEDIR=~/.vim/bundle
-VSPEC=${BUNDLEDIR}/vspec/bin/vspec
-for f in t/*.vim; do
-    ${VSPEC} ${BUNDLEDIR}/{vspec,textobj-user,textobj-comment} "${f}"
-done
+Use "make test" to run the whole suite, and "make t/<test>.vim" to run a
+specific test. You may need to adapt the paths to the vspec executable and to
+the runtime path directories at the top of the Makefile.
