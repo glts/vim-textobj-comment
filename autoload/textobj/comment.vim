@@ -509,12 +509,13 @@ function! s:AdjustInsideEnds(comment)
 
   else
 
+    let start[1] += strlen(leader) - 1
+    call cursor(start[0], start[1])
+
     if start[0] == end[0]
 
       " For one-line comments with simple leader select non-whitespace
       " content, but if there is none select whitespace or nothing
-      call cursor(start[0], start[1] + strlen(leader) - 1)
-
       let newstart = searchpos('\S', 'n', line("."))
       let newend = searchpos('\S\s*$', 'n', line("."))
       if newstart != [0, 0] && newend != [0, 0]
@@ -535,8 +536,6 @@ function! s:AdjustInsideEnds(comment)
 
       " It isn't clear what the appropriate behaviour for multi-line comments
       " with simple leader should be, we try to move the start to the first \S
-      let start[1] += strlen(leader) - 1
-      call cursor(start[0], start[1])
       let newstart = searchpos('\S', 'n', line("."))
       let start[1] = newstart[1] ? newstart[1] : start[1] + 1
     endif
