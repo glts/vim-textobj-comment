@@ -434,7 +434,10 @@ function! s:AdjustInlineEnds(comment, whitespace, inside)
     if a:whitespace
       call cursor(end[0], end[1])
       let newend = searchpos('\S', 'n', line("."))
-      if end[1] < newend[1] - 1
+      let lastcol = match(getline(line(".")), '.$') + 1
+      if newend == [0, 0] && end[1] != lastcol
+        let end[1] = lastcol
+      elseif end[1] < newend[1] - 1
         let end[1] = newend[1] - 1
       else
         call cursor(0, start[1])
