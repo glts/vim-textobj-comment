@@ -11,7 +11,7 @@ RTPDIRS = ~/.vim/bundle/{vspec,textobj-user,textobj-comment}
 
 FILES = plugin/textobj/comment.vim autoload/textobj/comment.vim \
         doc/textobj-comment.txt
-TESTS = t/plugin.vim t/leaders.vim t/simple.vim t/paired.vim
+TESTS = t/plugin.vim t/leaders.vim t/simple.vim t/paired.vim t/inline.vim
 
 test:
 	@for t in $(TESTS); do \
