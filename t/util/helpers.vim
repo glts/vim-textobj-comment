@@ -33,6 +33,29 @@ function! ToHaveColumns(actual, col1, col2)
   return a:actual[0][1] == a:col1 && a:actual[1][1] == a:col2
 endfunction
 
+function! LineNumbersFailureMessage(actual, lnum1, lnum2)
+  return FailureMessage(a:actual, a:lnum1, a:lnum2, 0)
+endfunction
+
+function! ColumnsFailureMessage(actual, col1, col2)
+  return FailureMessage(a:actual, a:col1, a:col2, 1)
+endfunction
+
+function! FailureMessage(actual, arg1, arg2, posidx)
+  return [ '  Actual value: ' . string(map(copy(a:actual), 'v:val['.a:posidx.']')),
+         \ 'Expected value: ' . string([a:arg1, a:arg2]) ]
+endfunction
+
 call vspec#customize_matcher('to_have_pos', {'match': function('ToHavePositions')})
-call vspec#customize_matcher('to_have_lnums', {'match': function('ToHaveLineNumbers')})
-call vspec#customize_matcher('to_have_cols', {'match': function('ToHaveColumns')})
+
+call vspec#customize_matcher('to_have_lnums', {
+     \   'match': function('ToHaveLineNumbers'),
+     \   'failure_message_for_should': function('LineNumbersFailureMessage'),
+     \   'failure_message_for_should_not': function('LineNumbersFailureMessage')
+     \ })
+
+call vspec#customize_matcher('to_have_cols', {
+     \   'match': function('ToHaveColumns'),
+     \   'failure_message_for_should': function('ColumnsFailureMessage'),
+     \   'failure_message_for_should_not': function('ColumnsFailureMessage')
+     \ })
