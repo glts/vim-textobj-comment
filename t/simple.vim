@@ -17,18 +17,18 @@ describe '<Plug>(textobj-comment-a)'
 
   it 'selects a one-line comment with trailing whitespace'
     5
-    Expect SelectAComment() to_have_lnums [5, 6]
+    Expect SelectAComment() to_have_lnums 5, 6
   end
 
   it 'selects a one-line comment with leading whitespace'
     12d
     normal! k
-    Expect SelectAComment() to_have_lnums [10, 11]
+    Expect SelectAComment() to_have_lnums 10, 11
   end
 
   it 'selects a multi-line comment'
     16
-    Expect SelectAComment() to_have_lnums [14, 17]
+    Expect SelectAComment() to_have_lnums 14, 17
   end
 
   it 'selects linewise'
@@ -40,9 +40,9 @@ describe '<Plug>(textobj-comment-a)'
   it 'sets proper start and end column'
     let command = "v\<Plug>(textobj-comment-a)v\<Esc>"
     11
-    Expect SelectAComment(command) to_have_cols [5, 1]
+    Expect SelectAComment(command) to_have_cols 5, 1
     17
-    Expect SelectAComment(command) to_have_cols [1, 25]
+    Expect SelectAComment(command) to_have_cols 1, 25
   end
 
 end
@@ -59,12 +59,12 @@ describe '<Plug>(textobj-comment-i)'
 
   it 'selects inner one-line comment'
     11
-    Expect SelectInnerComment() to_have_lnums [11, 11]
+    Expect SelectInnerComment() to_have_lnums 11, 11
   end
 
   it 'selects inner multi-line comment'
     16
-    Expect SelectInnerComment() to_have_lnums [15, 17]
+    Expect SelectInnerComment() to_have_lnums 15, 17
   end
 
   it 'selects linewise'
@@ -76,7 +76,7 @@ describe '<Plug>(textobj-comment-i)'
   it 'sets proper start and end column'
     let command = "v\<Plug>(textobj-comment-i)v\<Esc>"
     17
-    Expect SelectInnerComment(command) to_have_cols [9, 25]
+    Expect SelectInnerComment(command) to_have_cols 9, 25
   end
 
 end
@@ -93,23 +93,23 @@ describe '<Plug>(textobj-comment-inside-i)'
 
   it 'selects inside one-line comment'
     11
-    Expect SelectInsideComment() to_have_pos [[11, 7], [11, 28]]
+    Expect SelectInsideComment() to_have_pos [11, 7], [11, 28]
   end
 
   it 'selects inside multi-line comment'
     15
-    Expect SelectInsideComment() to_have_pos [[15, 11], [17, 25]]
+    Expect SelectInsideComment() to_have_pos [15, 11], [17, 25]
   end
 
   it 'selects inside one-line whitespace comment'
     23
     call setline(23, '#   ')
-    Expect SelectInsideComment() to_have_pos [[23, 2], [23, 4]]
+    Expect SelectInsideComment() to_have_pos [23, 2], [23, 4]
   end
 
   it 'selects inside multi-line whitespace comment'
     20
-    Expect SelectInsideComment() to_have_pos [[19, 14], [20, 16]]
+    Expect SelectInsideComment() to_have_pos [19, 14], [20, 16]
   end
 
   it 'selects characterwise'
@@ -139,9 +139,9 @@ describe 'simple leader search'
 
   it 'proceeds upwards'
     14
-    Expect SelectAComment()     to_have_lnums [11, 12]
+    Expect SelectAComment()     to_have_lnums 11, 12
     13
-    Expect SelectAComment() not to_have_lnums [11, 12]
+    Expect SelectAComment() not to_have_lnums 11, 12
   end
 
 end

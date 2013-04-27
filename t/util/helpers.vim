@@ -21,16 +21,16 @@ endfunction
 
 " Custom matchers
 
-function! ToHavePositions(actual, expected)
-  return a:actual == a:expected
+function! ToHavePositions(actual, pos1, pos2)
+  return a:actual[0] == a:pos1 && a:actual[1] == a:pos2
 endfunction
 
-function! ToHaveLineNumbers(actual, expected)
-  return a:actual[0][0] == a:expected[0] && a:actual[1][0] == a:expected[1]
+function! ToHaveLineNumbers(actual, lnum1, lnum2)
+  return a:actual[0][0] == a:lnum1 && a:actual[1][0] == a:lnum2
 endfunction
 
-function! ToHaveColumns(actual, expected)
-  return a:actual[0][1] == a:expected[0] && a:actual[1][1] == a:expected[1]
+function! ToHaveColumns(actual, col1, col2)
+  return a:actual[0][1] == a:col1 && a:actual[1][1] == a:col2
 endfunction
 
 call vspec#customize_matcher('to_have_pos', {'match': function('ToHavePositions')})
