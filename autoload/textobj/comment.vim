@@ -301,7 +301,7 @@ function! s:FindInlineComment(pos, simple_leaders, paired_leaders)
   let simple = []
   if !empty(a:simple_leaders)
     call cursor(a:pos[0], 1)
-    let simplere = '\V' . join(map(copy(a:simple_leaders),'"\\%(".s:escape(v:val)."\\)"'),'\|')
+    let simplere = '\V' . join(map(copy(a:simple_leaders),'"\\(".s:escape(v:val)."\\)"'),'\|')
     let [lnum, col, submatch] = searchpos(simplere, 'npW', line("."))
     if lnum != 0 && col != 0
       let endcol = match(getline(lnum), '.$') + 1
