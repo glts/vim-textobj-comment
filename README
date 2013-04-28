@@ -1,7 +1,7 @@
 textobj-comment
 ---------------
 
-WORK IN PROGRESS Please report any issues on the issue tracker.
+BETA Please report any issues on the issue tracker.
 
 
 This Vim plugin provides text objects to select comments.
