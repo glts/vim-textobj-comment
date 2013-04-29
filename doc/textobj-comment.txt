@@ -150,18 +150,18 @@ The mappings are defined in Visual and Operator-pending mode.  See the
 |textobj-user| documentation for more info.
 
 <Plug>(textobj-comment-a)			*<Plug>(textobj-comment-a)*
-ac			"a comment", select a comment with a delimiter.
+ac			"a comment", select a comment with delimiter.
 			When used on full-line comments it selects linewise,
 			when used on inline and end-of-line comments it
 			selects characterwise.
 
 <Plug>(textobj-comment-i)	 		*<Plug>(textobj-comment-i)*
 ic			"inner comment", select the content inside the comment
-			delimiters.
+			delimiter.
 			Always selects characterwise.
 
 <Plug>(textobj-comment-big-a)		       *<Plug>(textobj-comment-big-a)*
-aC			"a big comment", select a comment with delimiters plus
+aC			"a big comment", select a comment with delimiter plus
 			whitespace after the comment, or if there isn't any,
 			whitespace before the comment.
 			When used on full-line comments it selects linewise,
