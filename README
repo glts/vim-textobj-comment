@@ -16,9 +16,7 @@ single and opening/closing delimiters, for both full-line and inline/
 end-of-line comments.
 
 In order to find a target, textobj-comment looks for a comment under the
-cursor, in or at the end of the cursor line, and above the cursor line. "ac"
-and "aC" select linewise for full-line comments, characterwise for inline and
-end-of-line comments. "ic" always selects characterwise.
+cursor, in or at the end of the cursor line, and above the cursor line.
 
 This plugin depends on the textobj-user plugin, version 0.4.0.
 
