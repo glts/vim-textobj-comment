@@ -53,60 +53,58 @@ We'll now go on an illustrated tour of the text objects and the three steps of
 the heuristic.  See also |textobj-comment-interface| below for more details.
 
 
-1.  First, look for a full-line comment under the cursor.  "ac" selects
-    linewise including trailing blank lines (the vertical <Bar> indicates
+1.  First, look for a full-line comment under the cursor.  In full-line
+    context "ac" selects a linewise comment (the vertical <Bar> indicates
     selected lines). >
 
 	|    # We should probably inline
 	|    # this con[s]tant
-	|
 	     DOZEN = 12
 <
-    "ic" selects just the comment, without any surrounding whitespace. >
-
-	|    -- Cust[o]m "asInt'" function
-
-	     asInt' :: String -> Either ErrorMessage Int
-<
-    If there is no trailing whitespace, "ac" will select leading whitespace,
-    or no whitespace if there is none. >
-
-	|    /* This is an important part of
-	|     * the k[e]rnel. Do not touch! */
-	     int runlevel = 0;
-<
-    The "iC" text object, with capital "c", selects just what's inside the
-    comment (the overline indicates selected characters). >
-                _________________________
+    "ic" selects just what's inside the comment and always operates
+    characterwise (the overline indicates selected characters). >
+		_________________________
 	     %  See [t]he TeXbook, p. 352
 	     \def\thinspace{\kern .16667em }
+<
+    The "aC" text object selects "a big comment", which is the same as "ac"
+    but includes whitespace after the comment, or if there isn't any,
+    whitespace before the comment. >
+
+	|    -- Baby steps ...
+	|    -- Cust[o]m "asInt'" function
+	|
+	     asInt' :: String -> Either ErrorMessage Int
 
 
 2.  Second, look for an inline or an end-of-line comment.  Inline and
-    end-of-line comments are selected characterwise.  Again, "ic" selects just
-    the comment without surrounding whitespace. >
+    end-of-line comments are selected characterwise.  Again, "ac" selects a
+    comment including the delimiter. >
 						     __________________
 	     *parse_syllab[l]e = \&parse_syllables;  # deprecated alias
 <
-    "ac", on the other hand, does include whitespace. >
-			    __________________________
-	     int tm[p] = 12;    /* core temperature */
+    "aC" selects the same but with trailing or leading whitespace included.
+    This is especially useful when you want to yank or delete an end-of-line
+    comment and not leave any whitespace behind. >
+			     __________________________
+	     int tem[p] = 12;    /* core temperature */
 <
     For inline comments, a match under the cursor is preferred, else one to
-    the right of the cursor is selected.  Again with "ac": >
-		  ____________
-	     int  /* tm[p] */ temperature = 12; // renamed variable
+    the right of the cursor is selected.  With "ic": >
+		     ______
+	     int  /* tem[p] */ temperature = 12; // renamed variable
 
 
 3.  Third, if there hasn't been any success so far, search upwards for the
-    nearest full-line comment.  Using "ic": >
+    nearest full-line comment.  Using "ac": >
 
 	|    (* Let us make
 	|       a singleton. *)
 	     let s = SS.singleton "umb[r]ella";;
 <
-    Of course, the three steps apply to all three text objects.  "iC", too,
-    searches upwards to find a suitable target. >
+    Of course, the three steps always apply to all three text objects.  Here's
+    a final example featuring "ic" searching upwards to find a suitable
+    target. >
 		  _________________
 	     <!-- This needs to be
 	 ____________________
