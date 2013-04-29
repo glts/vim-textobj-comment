@@ -91,8 +91,8 @@ the heuristic.  See also |textobj-comment-interface| below for more details.
 <
     For inline comments, a match under the cursor is preferred, else one to
     the right of the cursor is selected.  With "ic": >
-		     ______
-	     int  /* tem[p] */ temperature = 12; // renamed variable
+		    ______
+	     int /* tem[p] */ temperature = 12; // renamed variable
 
 
 3.  Third, if there hasn't been any success so far, search upwards for the
