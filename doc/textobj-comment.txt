@@ -115,7 +115,7 @@ the heuristic.  See also |textobj-comment-interface| below for more details.
 After this the comment search fails and nothing is selected.
 
 Note that in order to support two styles of commenting with opening/closing
-delimiters, |textobj-comment| tries to be clever and handles them differently.
+delimiters, textobj-comment tries to be clever and handles them differently.
 Consider these comments in C and XML source code: >
 
 	     /* These functions should be
@@ -138,39 +138,38 @@ so that you can use "v" to switch to a useful characterwise selection. |v_v|
 
 INTERFACE					*textobj-comment-interface*
 
-By default, |textobj-comment| defines the key mappings "ac", "ic", and "aC"
-for the text objects it provides.  These map to named <Plug> mappings as
-usual.
+By default, textobj-comment defines the key mappings "ac", "ic", and "aC" for
+the text objects it provides.  These map to named <Plug> mappings as usual,
+and can be customized easily.  For example, to use "ax" instead of "ac": >
 
-	default		named mapping ~
-	ac		<Plug>(textobj-comment-a)
-	ic		<Plug>(textobj-comment-i)
-	aC		<Plug>(textobj-comment-big-a)
-
-
-<Plug>(textobj-comment-a)			*<Plug>(textobj-comment-a)*
-			Selects linewise a full-line comment, or characterwise
-			an inline or end-of-line comment.  Surrounding
-			whitespace is treated in a fashion similar to |ap|,
-			|aw|, etc., i.e. following whitespace is included if
-			there is any, else preceding whitespace is included if
-			there is any.
-
-<Plug>(textobj-comment-i)	 		*<Plug>(textobj-comment-i)*
-			Selects linewise a full-line comment or characterwise
-			an inline or end-of-line comment.  Surrounding
-			whitespace is not included.
-
-<Plug>(textobj-comment-big-a)		       *<Plug>(textobj-comment-big-a)*
-                        Select characterwise the content of a comment.
-			...
-
-For all text objects a simple heuristic applies which is described above in
-the section |textobj-comment-usage|.
+	let g:textobj_comment_no_default_key_mappings = 1
+	xmap ax <Plug>(textobj-comment-a)
+	omap ax <Plug>(textobj-comment-a)
 
 The mappings are defined in Visual and Operator-pending mode.  See the
 |textobj-user| documentation for more info.
 
+<Plug>(textobj-comment-a)			*<Plug>(textobj-comment-a)*
+ac			"a comment", select a comment with a delimiter.
+			When used on full-line comments it selects linewise,
+			when used on inline and end-of-line comments it
+			selects characterwise.
+
+<Plug>(textobj-comment-i)	 		*<Plug>(textobj-comment-i)*
+ic			"inner comment", select the content inside the comment
+			delimiters.
+			Always selects characterwise.
+
+<Plug>(textobj-comment-big-a)		       *<Plug>(textobj-comment-big-a)*
+aC			"a big comment", select a comment with delimiters plus
+			whitespace after the comment, or if there isn't any,
+			whitespace before the comment.
+			When used on full-line comments it selects linewise,
+			when used on inline and end-of-line comments it
+			selects characterwise.
+
+For all text objects the same simple heuristic applies.  This was demonstrated
+above in |textobj-comment-usage|.
 
 Like all plugins implementing |textobj-user|, |textobj-comment| defines the
 following two globals:
@@ -189,7 +188,7 @@ This command defines or restores the default key mappings "ac", "ic", and
 
 CHANGELOG					*textobj-comment-changelog*
 
-0.0.0	(unreleased) 2013-04-21
+0.0.0	(unreleased) 2013-04-29
 
 
  vim:tw=78:ts=8:ft=help:norl:
