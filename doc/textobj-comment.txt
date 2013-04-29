@@ -6,34 +6,40 @@ License: Same terms as Vim itself (see |license|)
 
 DESCRIPTION					*textobj-comment*
 
-This plugin provides text objects to select comments.
+This plugin provides text objects to select comments.  |text-objects|
 
-The "ac" and "ic" text objects select a comment with and without whitespace
-respectively.  The "iC" text object selects only the comment content without
-the delimiters.
+"ac" selects a comment including the comment delimiters, "ic" selects the
+comment content without the delimiters.  This behaviour is modeled after the
+built-in delimited text objects such as |a[| and |it|.  A third text object,
+"aC", selects a "big" comment, including trailing or leading whitespace.
 
 |textobj-comment| uses the filetype-specific 'comments' setting to determine
 what a comment looks like for a given language.  It should thus automatically
-work for most languages supported by Vim.  The plugin handles any number of
-single and opening/closing delimiters.
+work for most languages supported by Vim.  This requires that you enable
+filetype plugins in your configuration. |vimrc-filetype| >
 
-In order to find a target, |textobj-comment| looks for a comment under the
+	filetype plugin indent on
+
+The plugin handles any number of single and opening/closing delimiters, for
+both full-line and inline/end-of-line comments.
+
+In order to find a target, textobj-comment looks for a comment under the
 cursor, in or at the end of the cursor line, and above the cursor line.  "ac"
-and "ic" select |linewise| for full-line comments, |characterwise| for inline
-and end-of-line comments.  "iC" always selects characterwise.
+and "aC" select |linewise| for full-line comments, |characterwise| for inline
+and end-of-line comments.  "ic" always selects characterwise.
 
 You can see the text objects and the heuristic in action in the following
 section, |textobj-comment-usage|.
 
-Note This plugin depends on the |textobj-user| plugin, version 0.4.0 (Vim
-script ID 2100).
+Note This plugin depends on the |textobj-user| plugin, version 0.4.0.
+https://github.com/kana/vim-textobj-user
 
 
 USAGE						*textobj-comment-usage*
 
-The text objects "ac", "ic", and "iC" are defined in |Visual| and
+The text objects "ac", "ic", and "aC" are defined in |Visual| and
 |Operator-pending| mode.  When the user enters any one of these text objects,
-|textobj-comment| searches for a comment by using this procedure:
+textobj-comment searches for a comment by using this procedure:
 
 1.  Use any comment spanning the full line under the cursor.
 2.  Use any inline comment (if the language has them) or end-of-line comment
@@ -134,14 +140,14 @@ so that you can use "v" to switch to a useful characterwise selection. |v_v|
 
 INTERFACE					*textobj-comment-interface*
 
-By default, |textobj-comment| defines the key mappings "ac", "ic", and "iC"
+By default, |textobj-comment| defines the key mappings "ac", "ic", and "aC"
 for the text objects it provides.  These map to named <Plug> mappings as
 usual.
 
 	default		named mapping ~
 	ac		<Plug>(textobj-comment-a)
 	ic		<Plug>(textobj-comment-i)
-	iC		<Plug>(textobj-comment-inside-i)
+	aC		<Plug>(textobj-comment-big-a)
 
 
 <Plug>(textobj-comment-a)			*<Plug>(textobj-comment-a)*
@@ -157,7 +163,7 @@ usual.
 			an inline or end-of-line comment.  Surrounding
 			whitespace is not included.
 
-<Plug>(textobj-comment-inside-i)	    *<Plug>(textobj-comment-inside-i)*
+<Plug>(textobj-comment-big-a)		       *<Plug>(textobj-comment-big-a)*
                         Select characterwise the content of a comment.
 			...
 
@@ -173,14 +179,14 @@ following two globals:
 
 				   *g:textobj_comment_no_default_key_mappings*
 g:textobj_comment_no_default_key_mappings
-Sets whether or not to define the default key mappings "ac", "ic", and "iC".
+Sets whether or not to define the default key mappings "ac", "ic", and "aC".
 Set this to "1" in your |vimrc| if you would like to disable the default key
 mappings.
 
 					   *:TextobjCommentDefaultKeyMappings*
 :TextobjCommentDefaultKeyMappings
 This command defines or restores the default key mappings "ac", "ic", and
-"iC".
+"aC".
 
 
 CHANGELOG					*textobj-comment-changelog*
