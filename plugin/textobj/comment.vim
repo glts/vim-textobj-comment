@@ -1,6 +1,6 @@
 " textobj-comment - Text objects for comments
 " Author: glts <676c7473@gmail.com>
-" Date: 2013-04-21
+" Date: 2013-04-29
 " GetLatestVimScripts: 2100 1 textobj-user
 " GetLatestVimScripts: 0 0 :AutoInstall: textobj-comment
 
@@ -15,9 +15,9 @@ call textobj#user#plugin('comment', {
      \     'select-i-function': 'textobj#comment#select_i',
      \     'select-i': 'ic',
      \   },
-     \   'inside': {
-     \     'select-i-function': 'textobj#comment#select_inside_i',
-     \     'select-i': 'iC',
+     \   'big': {
+     \     'select-a-function': 'textobj#comment#select_big_a',
+     \     'select-a': 'aC',
      \   }
      \ })
 

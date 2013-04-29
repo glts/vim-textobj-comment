@@ -1,6 +1,6 @@
 " textobj-comment - Text objects for comments
 " Author: glts <676c7473@gmail.com>
-" Date: 2013-04-27
+" Date: 2013-04-29
 
 " Select() {{{1
 
@@ -9,7 +9,7 @@
 " leader under the cursor, then for inline and end-of-line comments at the
 " cursor position, and finally for the nearest full-line comment above.
 
-function! s:Select(whitespace, inside)
+function! s:Select(inside, whitespace)
 
   let leaders = s:GetLeaders()
   let simple_leaders = s:GetSimpleLeaders(leaders)
@@ -582,13 +582,13 @@ endfunction
 " Public interface {{{1
 
 function! textobj#comment#select_a()
-  return s:Select(1, 0)
-endfunction
-
-function! textobj#comment#select_i()
   return s:Select(0, 0)
 endfunction
 
-function! textobj#comment#select_inside_i()
+function! textobj#comment#select_i()
+  return s:Select(1, 0)
+endfunction
+
+function! textobj#comment#select_big_a()
   return s:Select(0, 1)
 endfunction
