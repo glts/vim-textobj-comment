@@ -1,6 +1,6 @@
 " textobj-comment - Text objects for comments
 " Author: glts <676c7473@gmail.com>
-" Date: 2013-04-29
+" Date: 2013-04-30
 
 " Select() {{{1
 
@@ -393,7 +393,7 @@ function! s:AdjustLineEnds(comment, whitespace, inside)
     let end[1] += strlen(leader[1]) - 1
   endif
 
-  " For "ac", move the end over trailing blank lines, if there aren't any move
+  " For "aC", move the end over trailing blank lines, if there aren't any move
   " the start over leading blank lines
   if a:whitespace
     if end[0] + 1 <= line("$") && s:isblank(end[0] + 1)
@@ -426,10 +426,10 @@ function! s:AdjustInlineEnds(comment, whitespace, inside)
 
   if type(leader) == type([])
 
-    " For "ac" and "ic", move the end over the end leader
+    " For "aC" and "ac", move the end over the end leader
     let end[1] += strlen(leader[1]) - 1
 
-    " For "ac", move the end over trailing whitespace, if there isn't any move
+    " For "aC", move the end over trailing whitespace, if there isn't any move
     " the start over leading whitespace
     if a:whitespace
       call cursor(end[0], end[1])
@@ -452,7 +452,7 @@ function! s:AdjustInlineEnds(comment, whitespace, inside)
 
     if a:whitespace
 
-      " For "ac", move the end over trailing whitespace, if there isn't any
+      " For "aC", move the end over trailing whitespace, if there isn't any
       " move the start over leading whitespace
       call cursor(end[0], end[1])
       let newend = searchpos('\s$', 'cn', line("."))
@@ -463,7 +463,7 @@ function! s:AdjustInlineEnds(comment, whitespace, inside)
       endif
     else
 
-      " For "ic", move the end to the last non-whitespace character
+      " For "ac", move the end to the last non-whitespace character
       let end[1] = start[1] + strlen(leader) - 1
       call cursor(end[0], end[1])
       let newend = searchpos('\S\s*$', 'n', line("."))
