@@ -1,6 +1,6 @@
 " textobj-comment - Text objects for comments
 " Author: glts <676c7473@gmail.com>
-" Date: 2013-04-30
+" Date: 2013-05-02
 
 " Select() {{{1
 
@@ -426,7 +426,7 @@ function! s:AdjustInlineEnds(comment, whitespace, inside)
 
   if type(leader) == type([])
 
-    " For "aC" and "ac", move the end over the end leader
+    " For "ac" and "aC", move the end over the end leader
     let end[1] += strlen(leader[1]) - 1
 
     " For "aC", move the end over trailing whitespace, if there isn't any move
