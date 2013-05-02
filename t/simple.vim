@@ -15,14 +15,13 @@ describe '<Plug>(textobj-comment-a)'
     bwipeout!
   end
 
-  it 'selects a one-line comment'
+  it 'selects a comment'
     11
     Expect SelectAComment() to_have_lnums 11, 11
-  end
-
-  it 'selects a multi-line comment'
     16
     Expect SelectAComment() to_have_lnums 15, 17
+    19
+    Expect SelectAComment() to_have_lnums 19, 20
   end
 
   it 'selects linewise'
@@ -33,8 +32,12 @@ describe '<Plug>(textobj-comment-a)'
 
   it 'sets proper start and end column'
     let command = "v\<Plug>(textobj-comment-a)v\<Esc>"
+    5
+    Expect SelectAComment(command) to_have_cols 1, 18
     17
     Expect SelectAComment(command) to_have_cols 9, 25
+    23
+    Expect SelectAComment(command) to_have_cols 1, 1
   end
 
 end
@@ -49,23 +52,19 @@ describe '<Plug>(textobj-comment-i)'
     bwipeout!
   end
 
-  it 'selects inner one-line comment'
+  it 'selects inner comment'
     11
     Expect SelectInnerComment() to_have_pos [11, 7], [11, 28]
-  end
-
-  it 'selects inner multi-line comment'
+    25
+    Expect SelectInnerComment() to_have_pos [25, 2], [25, 9]
     15
     Expect SelectInnerComment() to_have_pos [15, 11], [17, 25]
   end
 
-  it 'selects inner one-line whitespace comment'
+  it 'selects inner whitespace comment'
     23
     call setline(23, '#   ')
     Expect SelectInnerComment() to_have_pos [23, 2], [23, 4]
-  end
-
-  it 'selects inner multi-line whitespace comment'
     20
     Expect SelectInnerComment() to_have_pos [19, 14], [20, 16]
   end
@@ -95,18 +94,17 @@ describe '<Plug>(textobj-comment-big-a)'
     bwipeout!
   end
 
-  it 'selects a big one-line comment with trailing whitespace'
+  it 'selects a big comment with trailing whitespace'
     5
     Expect SelectABigComment() to_have_lnums 5, 6
+    11
+    Expect SelectABigComment() to_have_lnums 11, 12
   end
 
-  it 'selects a big one-line comment with leading whitespace'
-    12d
+  it 'selects a big comment with leading whitespace'
+    26d
     normal! k
-    Expect SelectABigComment() to_have_lnums 10, 11
-  end
-
-  it 'selects a big multi-line comment'
+    Expect SelectABigComment() to_have_lnums 24, 25
     16
     Expect SelectABigComment() to_have_lnums 14, 17
   end
@@ -139,9 +137,9 @@ describe 'simple leader search'
 
   it 'proceeds upwards'
     14
-    Expect SelectABigComment()     to_have_lnums 11, 12
+    Expect SelectAComment()     to_have_lnums 11, 11
     13
-    Expect SelectABigComment() not to_have_lnums 11, 12
+    Expect SelectAComment() not to_have_lnums 11, 11
   end
 
 end
