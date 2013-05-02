@@ -1,7 +1,7 @@
 " Selection helpers
 
 function! DoSelect(cmd)
-  exe "normal" a:cmd
+  exe 'normal' a:cmd
   let [_b, lnum1, col1, _o] = getpos("'<")
   let [_b, lnum2, col2, _o] = getpos("'>")
   return [[lnum1, col1], [lnum2, col2]]
@@ -47,13 +47,11 @@ function! FailureMessage(actual, arg1, arg2, posidx)
 endfunction
 
 call vspec#customize_matcher('to_have_pos', {'match': function('ToHavePositions')})
-
 call vspec#customize_matcher('to_have_lnums', {
      \   'match': function('ToHaveLineNumbers'),
      \   'failure_message_for_should': function('LineNumbersFailureMessage'),
      \   'failure_message_for_should_not': function('LineNumbersFailureMessage')
      \ })
-
 call vspec#customize_matcher('to_have_cols', {
      \   'match': function('ToHaveColumns'),
      \   'failure_message_for_should': function('ColumnsFailureMessage'),
