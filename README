@@ -1,8 +1,6 @@
 textobj-comment
 ---------------
 
-BETA Please report any issues on the issue tracker.
-
 This Vim plugin provides text objects to select comments.
 
 "ac" selects a comment including the comment delimiters, "ic" selects the
@@ -10,16 +8,14 @@ comment content without the delimiters. A third text object, "aC", selects a
 "big" comment, including trailing or leading whitespace.
 
 textobj-comment uses the filetype-specific 'comments' setting to determine
-what a comment looks like for a given language. It should thus automatically
-work for most languages supported by Vim. The plugin handles any number of
-single and opening/closing delimiters, for both full-line and inline/
-end-of-line comments.
+what a comment looks like for a given language. Make sure you have enabled
+filetype plugins in your configuration to make this work.
 
 In order to find a target, textobj-comment looks for a comment under the
-cursor, in or at the end of the cursor line, and above the cursor line.
+cursor, in or at the end of the cursor line, and above the cursor line. You
+can see a demo of the text objects and the heuristic in the documentation.
 
 This plugin depends on the textobj-user plugin, version 0.4.0.
-
 https://github.com/kana/vim-textobj-user
 
 Installation
