@@ -1,6 +1,7 @@
 " textobj-comment - Text objects for comments
 " Author: glts <676c7473@gmail.com>
 " Date: 2013-04-29
+" Version: 1.0.0
 " GetLatestVimScripts: 2100 1 textobj-user
 " GetLatestVimScripts: 0 0 :AutoInstall: textobj-comment
 

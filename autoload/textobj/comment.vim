@@ -1,6 +1,7 @@
 " textobj-comment - Text objects for comments
 " Author: glts <676c7473@gmail.com>
-" Date: 2013-05-02
+" Date: 2013-05-03
+" Version: 1.0.0
 
 " Select() {{{1
 
