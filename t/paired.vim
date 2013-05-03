@@ -22,6 +22,12 @@ describe '<Plug>(textobj-comment-a)'
     Expect SelectAComment() to_have_lnums 8, 8
     26
     Expect SelectAComment() to_have_lnums 26, 26
+    22
+    Expect SelectAComment() to_have_lnums 22, 23
+    12
+    Expect SelectAComment()     to_have_lnums 12, 12
+    normal! WWW
+    Expect SelectAComment() not to_have_lnums 12, 12
   end
 
   it 'selects linewise'
