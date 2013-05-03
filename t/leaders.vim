@@ -67,7 +67,7 @@ end
 describe 's:GetSimpleLeaders()'
 
   it 'returns the simple leaders'
-    let leaders = [['bO', '; '], ['s', '{-'], ['e','-}'], ['', '--']]
+    let leaders = [['bO', '; '], ['s', '{-'], ['e', '-}'], ['', '--']]
     Expect Call('s:GetSimpleLeaders', leaders) == ['; ', '--']
   end
 
@@ -80,7 +80,7 @@ end
 describe 's:GetPairedLeaders()'
 
   it 'returns the paired leaders'
-    let leaders = [['bO', '; '], ['s1', '{-'], ['e','-}'], ['', '--'], ['sO', '<'], ['ex', '>']]
+    let leaders = [['bO', '; '], ['s1', '{-'], ['e', '-}'], ['', '--'], ['sO', '<'], ['ex', '>']]
     Expect Call('s:GetPairedLeaders', leaders) == [['{-', '-}'], ['<', '>']]
   end
 

@@ -32,16 +32,13 @@ git clone git://github.com/glts/vim-textobj-comment.git textobj-comment
 But this plugin also plays well with the built-in GetLatestVimScripts and
 other plugin managers such as Vundle, vim-addon-manager, and vim-flavor.
 
-Don't forget to run ":helptags" or equivalent on your doc directory to
-register the help file.
-
 Development
 -----------
 
 If you are interested in working on the code, use the test suite to make sure
-you don't break anything. The test suite is written using vspec, version
-1.1.0.
+you don't break anything.
 
+The test suite is written using vspec, version 1.1.0.
 https://github.com/kana/vim-vspec
 
 Use "make test" to run the whole suite, and "make t/<test>.vim" to run a
