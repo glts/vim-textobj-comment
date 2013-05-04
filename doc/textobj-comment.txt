@@ -164,7 +164,7 @@ aC			<Plug>(textobj-comment-big-a)
 
 All text objects use the same simple heuristic.  See |textobj-comment-usage|.
 
-A global variable and a user command are also installed with this plugin.
+A user command and a global variable are also installed with this plugin.
 
 					   *:TextobjCommentDefaultKeyMappings*
 :TextobjCommentDefaultKeyMappings[!]
