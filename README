@@ -32,6 +32,9 @@ git clone git://github.com/glts/vim-textobj-comment.git textobj-comment
 But this plugin also plays well with the built-in GetLatestVimScripts and
 other plugin managers such as Vundle, vim-addon-manager, and vim-flavor.
 
+Don't forget to install textobj-user first if your setup doesn't take care of
+dependencies automatically.
+
 Development
 -----------
 
