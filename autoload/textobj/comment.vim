@@ -20,7 +20,7 @@ function! s:Select(inside, whitespace)
     return 0
   endif
 
-  let pos = [getpos(".")[1], getpos(".")[2]]
+  let pos = getpos(".")[1:2]
 
   " Search for simple leader first to avoid being caught up in strange paired
   " leaders
