@@ -3,10 +3,10 @@ textobj-comment
 
 This Vim plugin provides text objects for comments.
 
-By default, `ac` selects a comment including the comment delimiters and
-`ic` selects just the comment content. (There's also a third text
-object, `aC`, which selects a comment including trailing or leading
-whitespace.)
+`ac` selects a comment including the comment delimiters and `ic` selects
+just the comment content. (There's also a third text object, `aC`, which
+selects a comment including trailing or leading whitespace.) These
+mappings are available in Visual and Operator-pending mode.
 
 This plugin uses the `'comments'` and `'commentstring'` settings to
 determine what a comment looks like for a given filetype. It works with
