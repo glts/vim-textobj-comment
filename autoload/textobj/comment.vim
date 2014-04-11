@@ -10,10 +10,7 @@
 " leader under the cursor, then for inline and end-of-line comments at the
 " cursor position, and finally for the nearest full-line comment above.
 function! s:Select(inside, whitespace)
-  let leaders = s:GetLeaders()
-  let simple_leaders = s:GetSimpleLeaders(leaders)
-  let paired_leaders = s:GetPairedLeaders(leaders)
-
+  let [simple_leaders, paired_leaders] = s:GetLeaders()
   if empty(simple_leaders + paired_leaders)
     return 0
   endif
@@ -68,7 +65,7 @@ function! s:GetLeaders()
       let leaders = [['s',substitute(cmsleader[0],'\s*$','','')], ['e',substitute(cmsleader[1],'^\s*','','')]]
     endif
   endif
-  return leaders  " e.g. [['s','/*'], ['e','*/'], ['','//']]
+  return [s:GetSimpleLeaders(leaders), s:GetPairedLeaders(leaders)]
 endfunction
 
 function! s:GetSimpleLeaders(leaders)
