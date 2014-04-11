@@ -45,21 +45,23 @@ describe 's:GetLeaders()'
   end
 
   it 'parses default ''comments'' setting'
-    Expect len(Call('s:GetLeaders')) == 9
-    Expect filter(Call('s:GetLeaders'), 'len(v:val)!=2') == []
+    Expect len(Call('s:GetLeaders')) == 2
+    Expect Call('s:GetLeaders')[0] == ['//', '#', '%', 'XCOMM', '>']
+    Expect Call('s:GetLeaders')[1] == [['/*', '*/']]
+    Expect filter(Call('s:GetLeaders')[1], 'len(v:val)!=2') == []
   end
 
   it 'falls back on ''commentstring'' setting'
     set comments=
-    Expect Call('s:GetLeaders') == [['s', '/*'], ['e', '*/']]
+    Expect Call('s:GetLeaders') == [[], [['/*', '*/']]]
     set commentstring=;;\ %s
-    Expect Call('s:GetLeaders') == [['', ';;']]
+    Expect Call('s:GetLeaders') == [[';;'], []]
   end
 
   it 'handles empty ''comments'' and ''commentstring'' settings'
     set comments=
     set commentstring=
-    Expect Call('s:GetLeaders') == []
+    Expect Call('s:GetLeaders') == [[], []]
   end
 
 end
