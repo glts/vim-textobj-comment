@@ -26,12 +26,12 @@ Below is a quick demo of the 'a comment' text object. The command used
 is `vac`. The targeted area is the same for analogous commands using an
 operator, such as `dac`, `cac`, and `gqac`.
 
-![demo](https://raw.github.com/glts/vim-textobj-comment/gh-pages/images/comment-vac.gif)
+![demo](https://raw.github.com/glts/vim-textobj-comment/gh-pages/images/demo-vac.gif)
 
 The 'inner comment' text object targets the inside of a comment. Here I
 use `cic`:
 
-![demo](https://raw.github.com/glts/vim-textobj-comment/gh-pages/images/comment-cic.gif)
+![demo](https://raw.github.com/glts/vim-textobj-comment/gh-pages/images/demo-cic.gif)
 
 Requirements
 ------------
