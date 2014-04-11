@@ -63,10 +63,9 @@ Development
 
 The code isn't pretty. If you look closely you'll notice a lot of effort
 being made to cover corner cases and make the behaviour of the text
-objects as similar to the built-ins as possible.
-
-That said, if you are interested in working on it, use the test suite to
-make sure you don't break anything.
+objects as similar to the built-ins as possible. That said, if you are
+interested in working on it, use the test suite to make sure you don't
+break anything.
 
 The test suite is written using [vspec][4].
 
