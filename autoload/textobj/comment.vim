@@ -9,7 +9,7 @@
 " First we look for a full-line comment with simple leader or with paired
 " leader under the cursor, then for inline and end-of-line comments at the
 " cursor position, and finally for the nearest full-line comment above.
-function! s:Select(inside, whitespace)
+function! s:Select(inside, whitespace) abort
   let [simple_leaders, paired_leaders] = s:GetLeaders()
   if empty(simple_leaders + paired_leaders)
     return 0
@@ -55,7 +55,7 @@ endfunction
 " the current 'comments' setting into two types, simple and paired comment
 " leaders. The 'commentstring' setting is used as fallback and verification.
 
-function! s:GetLeaders()
+function! s:GetLeaders() abort
   let leaders = map(split(&comments, '\\\@<!,'), 's:partition(v:val, ":")')
   if empty(leaders) && &commentstring =~# '.%s'
     let cmsleader = s:partition(&commentstring, "%s")
@@ -68,11 +68,11 @@ function! s:GetLeaders()
   return [s:GetSimpleLeaders(leaders), s:GetPairedLeaders(leaders)]
 endfunction
 
-function! s:GetSimpleLeaders(leaders)
+function! s:GetSimpleLeaders(leaders) abort
   return map(filter(copy(a:leaders), 'v:val[0]=~#"^[bnO]*$"'), 'v:val[1]')
 endfunction
 
-function! s:GetPairedLeaders(leaders)
+function! s:GetPairedLeaders(leaders) abort
   let seleaders = filter(copy(a:leaders), 'v:val[0]=~#"[se]"')
   let pairedleaders = []
   " Only use valid pairs, favour those verifiable through 'commentstring'
@@ -98,7 +98,7 @@ endfunction
 " the end is on the last byte position in the line). Empty when no match.
 
 " s:FindSimpleLineComment() {{{2
-function! s:FindSimpleLineComment(pos, simple_leaders, upwards)
+function! s:FindSimpleLineComment(pos, simple_leaders, upwards) abort
   let cursor_line = a:pos[0]
 
   if a:upwards && !empty(a:simple_leaders)
@@ -142,7 +142,7 @@ function! s:FindSimpleLineComment(pos, simple_leaders, upwards)
 endfunction
 
 " s:FindPairedLineComment() {{{2
-function! s:FindPairedLineComment(pos, paired_leaders, upwards)
+function! s:FindPairedLineComment(pos, paired_leaders, upwards) abort
   let found = []
   for pair in a:paired_leaders
     let pairpos = s:FindNearestPair(a:pos, pair, a:upwards)
@@ -161,7 +161,7 @@ function! s:FindPairedLineComment(pos, paired_leaders, upwards)
 endfunction
 
 " s:FindNearestPair() {{{2
-function! s:FindNearestPair(pos, pair, upwards)
+function! s:FindNearestPair(pos, pair, upwards) abort
   let [open, close] = a:pair
   let start = []
   let end   = []
@@ -264,7 +264,7 @@ function! s:FindNearestPair(pos, pair, upwards)
 endfunction
 
 " s:FindInlineComment() {{{2
-function! s:FindInlineComment(pos, simple_leaders, paired_leaders)
+function! s:FindInlineComment(pos, simple_leaders, paired_leaders) abort
   " Since we are working with searchpos() to search for inline comments, it is
   " important to always restore the cursor position
   let save_pos = getpos(".")
@@ -351,7 +351,7 @@ endfunction
 " multibyte-safe. Multibyte space characters are not handled properly.
 
 " s:AdjustLineEnds() {{{2
-function! s:AdjustLineEnds(comment, whitespace, inside)
+function! s:AdjustLineEnds(comment, whitespace, inside) abort
   if a:inside
     return s:AdjustInsideEnds(a:comment)
   endif
@@ -385,7 +385,7 @@ function! s:AdjustLineEnds(comment, whitespace, inside)
 endfunction
 
 " s:AdjustInlineEnds() {{{2
-function! s:AdjustInlineEnds(comment, whitespace, inside)
+function! s:AdjustInlineEnds(comment, whitespace, inside) abort
   if a:inside
     return s:AdjustInsideEnds(a:comment)
   endif
@@ -439,7 +439,7 @@ function! s:AdjustInlineEnds(comment, whitespace, inside)
 endfunction
 
 " s:AdjustInsideEnds() {{{2
-function! s:AdjustInsideEnds(comment)
+function! s:AdjustInsideEnds(comment) abort
   let [leader, start, end] = a:comment
 
   if type(leader) == type([])
@@ -497,25 +497,25 @@ endfunction
 
 " Utilities {{{1
 
-function! s:partition(str, delim)
+function! s:partition(str, delim) abort
   let idx = stridx(a:str, a:delim)
   return idx < 0 ? [a:str, ''] : [strpart(a:str,0,idx), strpart(a:str,idx+strlen(a:delim))]
 endfunction
 
-function! s:nextcol(lnum, col)
+function! s:nextcol(lnum, col) abort
   let col = match(strpart(getline(a:lnum > 0 ? a:lnum : line(".")), a:col-1), '.\zs.')
   return col < 0 ? -1 : col + a:col
 endfunction
 
-function! s:escape(str)
+function! s:escape(str) abort
   return escape(a:str, '\')
 endfunction
 
-function! s:isblank(lnum)
+function! s:isblank(lnum) abort
   return getline(a:lnum) =~ '^\s*$'
 endfunction
 
-function! s:compare(pos1, pos2)
+function! s:compare(pos1, pos2) abort
   if a:pos1[0] < a:pos2[0]
     return -1
   elseif a:pos1[0] > a:pos2[0]
@@ -530,14 +530,14 @@ endfunction
 
 " Public interface {{{1
 
-function! textobj#comment#select_a()
+function! textobj#comment#select_a() abort
   return s:Select(0, 0)
 endfunction
 
-function! textobj#comment#select_i()
+function! textobj#comment#select_i() abort
   return s:Select(1, 0)
 endfunction
 
-function! textobj#comment#select_big_a()
+function! textobj#comment#select_big_a() abort
   return s:Select(0, 1)
 endfunction
