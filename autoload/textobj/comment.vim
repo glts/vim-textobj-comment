@@ -538,6 +538,6 @@ function! textobj#comment#select_i() abort
   return s:Select(1, 0)
 endfunction
 
-function! textobj#comment#select_big_a() abort
+function! textobj#comment#select_big_i() abort
   return s:Select(0, 1)
 endfunction

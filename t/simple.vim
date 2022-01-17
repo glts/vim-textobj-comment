@@ -84,7 +84,7 @@ describe '<Plug>(textobj-comment-i)'
 
 end
 
-describe '<Plug>(textobj-comment-big-a)'
+describe '<Plug>(textobj-comment-big-i)'
 
   before
     silent tabedit t/fixtures/simple.py
@@ -96,31 +96,31 @@ describe '<Plug>(textobj-comment-big-a)'
 
   it 'selects a big comment with trailing whitespace'
     5
-    Expect SelectABigComment() to_have_lnums 5, 6
+    Expect SelectIBigComment() to_have_lnums 5, 6
     11
-    Expect SelectABigComment() to_have_lnums 11, 12
+    Expect SelectIBigComment() to_have_lnums 11, 12
   end
 
   it 'selects a big comment with leading whitespace'
     26d
     normal! k
-    Expect SelectABigComment() to_have_lnums 24, 25
+    Expect SelectIBigComment() to_have_lnums 24, 25
     16
-    Expect SelectABigComment() to_have_lnums 14, 17
+    Expect SelectIBigComment() to_have_lnums 14, 17
   end
 
   it 'selects linewise'
     5
-    call SelectABigComment()
+    call SelectIBigComment()
     Expect visualmode() ==# 'V'
   end
 
   it 'sets proper start and end column'
-    let command = "v\<Plug>(textobj-comment-big-a)v\<Esc>"
+    let command = "v\<Plug>(textobj-comment-big-i)v\<Esc>"
     11
-    Expect SelectABigComment(command) to_have_cols 5, 1
+    Expect SelectIBigComment(command) to_have_cols 5, 1
     17
-    Expect SelectABigComment(command) to_have_cols 1, 25
+    Expect SelectIBigComment(command) to_have_cols 1, 25
   end
 
 end

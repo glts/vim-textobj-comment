@@ -15,8 +15,8 @@ function! SelectInnerComment(...)
   return DoSelect(a:0 ? a:1 : "v\<Plug>(textobj-comment-i)\<Esc>")
 endfunction
 
-function! SelectABigComment(...)
-  return DoSelect(a:0 ? a:1 : "v\<Plug>(textobj-comment-big-a)\<Esc>")
+function! SelectIBigComment(...)
+  return DoSelect(a:0 ? a:1 : "v\<Plug>(textobj-comment-big-i)\<Esc>")
 endfunction
 
 " Custom matchers

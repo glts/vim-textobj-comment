@@ -78,7 +78,7 @@ describe '<Plug>(textobj-comment-i)'
 
 end
 
-describe '<Plug>(textobj-comment-big-a)'
+describe '<Plug>(textobj-comment-big-i)'
 
   before
     silent tabedit t/fixtures/Inline.java
@@ -88,40 +88,40 @@ describe '<Plug>(textobj-comment-big-a)'
     bwipeout!
   end
 
-  it 'selects a big comment with trailing whitespace'
+  it 'selects inner big comment with trailing whitespace'
     3
     normal! ww
-    Expect SelectABigComment() to_have_cols 8, 28
+    Expect SelectIBigComment() to_have_cols 8, 28
     7
     exe "normal! A  \<Tab> \<Esc>b"
-    Expect SelectABigComment() to_have_cols 23, 58
+    Expect SelectIBigComment() to_have_cols 23, 58
     24
     normal! ww
-    Expect SelectABigComment() to_have_cols 7, 39
+    Expect SelectIBigComment() to_have_cols 7, 39
   end
 
   it 'selects a big comment with leading whitespace'
     5
     normal! WWhr_h
-    Expect SelectABigComment() to_have_cols 7, 17
+    Expect SelectIBigComment() to_have_cols 7, 17
     5
     normal! $
-    Expect SelectABigComment() to_have_cols 46, 68
+    Expect SelectIBigComment() to_have_cols 46, 68
     7
-    Expect SelectABigComment() to_have_cols 22, 54
+    Expect SelectIBigComment() to_have_cols 22, 54
   end
 
   it 'selects a big comment without whitespace'
     15
     normal! ww
-    Expect SelectABigComment() to_have_cols 20, 47
+    Expect SelectIBigComment() to_have_cols 20, 47
     18
-    Expect SelectABigComment() to_have_cols 17, 45
+    Expect SelectIBigComment() to_have_cols 17, 45
   end
 
   it 'selects characterwise'
     18
-    call SelectABigComment()
+    call SelectIBigComment()
     Expect visualmode() ==# 'v'
   end
 
@@ -139,8 +139,8 @@ describe 'inline leader search'
 
   it 'proceeds towards the right'
     20
-    Expect SelectABigComment() to_have_cols 14, 27
-    Expect SelectABigComment() to_have_cols 27, 33
+    Expect SelectIBigComment() to_have_cols 14, 27
+    Expect SelectIBigComment() to_have_cols 27, 33
     normal! w
     Expect SelectInnerComment() to_have_cols 42, 50
     Expect SelectInnerComment() to_have_cols 47, 73

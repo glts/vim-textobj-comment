@@ -21,8 +21,8 @@ call textobj#user#plugin('comment', {
      \     'select-i': 'ic',
      \   },
      \   'big': {
-     \     'select-a-function': 'textobj#comment#select_big_a',
-     \     'select-a': 'aC',
+     \     'select-i-function': 'textobj#comment#select_big_i',
+     \     'select-i': 'iC',
      \   }
      \ })
 
