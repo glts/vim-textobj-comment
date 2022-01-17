@@ -9,7 +9,7 @@
 " First we look for a full-line comment with simple leader or with paired
 " leader under the cursor, then for inline and end-of-line comments at the
 " cursor position, and finally for the nearest full-line comment above.
-function! s:Select(inside, whitespace) abort
+function! s:Select(inside, whitespace, pass_empty_lines) abort
   let [simple_leaders, paired_leaders] = s:GetLeaders()
   if empty(simple_leaders + paired_leaders)
     return 0
@@ -19,7 +19,7 @@ function! s:Select(inside, whitespace) abort
 
   " Search for simple leader first to avoid being caught up in strange paired
   " leaders
-  let comment = s:FindSimpleLineComment(pos, simple_leaders, 0)
+  let comment = s:FindSimpleLineComment(pos, simple_leaders, 0, a:pass_empty_lines)
   if !empty(comment)
     return s:AdjustLineEnds(comment, a:whitespace, a:inside)
   endif
@@ -33,7 +33,7 @@ function! s:Select(inside, whitespace) abort
     return s:AdjustInlineEnds(comment, a:whitespace, a:inside)
   endif
 
-  let scomment = s:FindSimpleLineComment(pos, simple_leaders, 1)
+  let scomment = s:FindSimpleLineComment(pos, simple_leaders, 1, a:pass_empty_lines)
   let pcomment = s:FindPairedLineComment(pos, paired_leaders, 1)
   if !empty(scomment) || !empty(pcomment)
     if empty(scomment)
@@ -98,7 +98,7 @@ endfunction
 " the end is on the last byte position in the line). Empty when no match.
 
 " s:FindSimpleLineComment() {{{2
-function! s:FindSimpleLineComment(pos, simple_leaders, upwards) abort
+function! s:FindSimpleLineComment(pos, simple_leaders, upwards, pass_empty_lines) abort
   let cursor_line = a:pos[0]
 
   if a:upwards && !empty(a:simple_leaders)
@@ -113,6 +113,13 @@ function! s:FindSimpleLineComment(pos, simple_leaders, upwards) abort
 
   for simple in a:simple_leaders
     let simplere = '\V\^\s\*' . s:escape(simple)
+
+    " if we allow to cross over empty (whitespace-only) lines, we append
+    " an 'or empty' to the regular expression
+    if a:pass_empty_lines
+      let simplere = simplere . '\|\^\s\*\$'
+    endif
+
     if getline(cursor_line) =~# simplere
       let startline = cursor_line
       let ln = cursor_line - 1
@@ -531,13 +538,17 @@ endfunction
 " Public interface {{{1
 
 function! textobj#comment#select_a() abort
-  return s:Select(0, 0)
+  return s:Select(0, 0, 0)
 endfunction
 
 function! textobj#comment#select_i() abort
-  return s:Select(1, 0)
+  return s:Select(1, 0, 0)
+endfunction
+
+function! textobj#comment#select_big_i() abort
+  return s:Select(0, 1, 0)
 endfunction
 
 function! textobj#comment#select_big_a() abort
-  return s:Select(0, 1)
+  return s:Select(0, 0, 1)
 endfunction

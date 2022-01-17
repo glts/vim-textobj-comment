@@ -88,7 +88,7 @@ describe '<Plug>(textobj-comment-i)'
 
 end
 
-describe '<Plug>(textobj-comment-big-a)'
+describe '<Plug>(textobj-comment-big-i)'
 
   before
     silent tabedit t/fixtures/paired.c
@@ -98,41 +98,41 @@ describe '<Plug>(textobj-comment-big-a)'
     bwipeout!
   end
 
-  it 'selects a big comment with trailing whitespace'
+  it 'selects inner big comment with trailing whitespace'
     26
-    Expect SelectABigComment() to_have_lnums 26, 27
+    Expect SelectIBigComment() to_have_lnums 26, 27
     call append(5, ["", "\t", ""])
     5
-    Expect SelectABigComment() to_have_lnums 3, 8
+    Expect SelectIBigComment() to_have_lnums 3, 8
   end
 
   it 'selects a big comment with leading whitespace'
     4
-    Expect SelectABigComment() to_have_lnums 2, 5
+    Expect SelectIBigComment() to_have_lnums 2, 5
     call append(7, "\t\t")
     9
-    Expect SelectABigComment() to_have_lnums 8, 9
+    Expect SelectIBigComment() to_have_lnums 8, 9
   end
 
   it 'selects a big comment without whitespace'
     19
-    Expect SelectABigComment() to_have_lnums 19, 19
+    Expect SelectIBigComment() to_have_lnums 19, 19
     2delete
-    Expect SelectABigComment() to_have_lnums 2, 4
+    Expect SelectIBigComment() to_have_lnums 2, 4
   end
 
   it 'selects linewise'
     4
-    call SelectABigComment()
+    call SelectIBigComment()
     Expect visualmode() ==# 'V'
   end
 
   it 'sets proper start and end column'
-    let command = "v\<Plug>(textobj-comment-big-a)v\<Esc>"
+    let command = "v\<Plug>(textobj-comment-big-i)v\<Esc>"
     3
-    Expect SelectABigComment(command) to_have_pos [2, 1], [5, 21]
+    Expect SelectIBigComment(command) to_have_pos [2, 1], [5, 21]
     8
-    Expect SelectABigComment(command) to_have_cols 5, 23
+    Expect SelectIBigComment(command) to_have_cols 5, 23
   end
 
 end
@@ -149,9 +149,9 @@ describe 'paired leader search'
 
   it 'proceeds upwards'
     9
-    Expect SelectABigComment()     to_have_lnums 8, 8
+    Expect SelectIBigComment()     to_have_lnums 8, 8
     10
-    Expect SelectABigComment() not to_have_lnums 8, 8
+    Expect SelectIBigComment() not to_have_lnums 8, 8
   end
 
 end
